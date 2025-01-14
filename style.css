@@ -1,0 +1,462 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #121212;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+header {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(40,40,40,0.8), rgba(27,27,27,0.8));
+    color: #fff;
+    position: relative;
+}
+
+header h1 {
+    font-size: 3em;
+    margin: 0;
+    color: #ff6b6b;
+    animation: fadeInDown 1s ease-out;
+}
+
+header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+    color: #e0e0e0;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.content-section {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 40px auto;
+    background: rgba(30,30,30,0.9);
+    border-radius: 10px;
+    animation: fadeIn 1.2s ease-out;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.content-section:hover {
+    transform: scale(1.01);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.content-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+    text-align: center;
+}
+
+.comparison-chart {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    overflow-x: auto;  /* Добавляем прокрутку по оси X */
+    white-space: nowrap;  /* Не допускаем переноса элементов */
+}
+
+.model {
+    flex: 1;
+    margin: 0 10px;
+    padding: 40px 15px;
+    font-size: 1.2em;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    background: #2b2b2b;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.model:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+}
+
+.install-command-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #333333;
+    border-radius: 5px;
+    padding: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.install-command {
+    color: #e0e0e0;
+    font-size: 1.1em;
+    margin-right: 10px;
+    white-space: nowrap;
+    flex-grow: 1;
+}
+
+.copy-button {
+    background: #ff6b6b;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.copy-button:hover {
+    background: #ff4c4c;
+    transform: scale(1.05);
+}
+
+.button-link {
+    display: inline-block;
+    background: #4facfe;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.button-link:hover {
+    background: #00c9fe;
+    transform: translateY(-3px);
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #121212;
+    color: #fff;
+    margin-top: 40px;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, #121212);
+}
+
+a {
+    color: #ff6b6b;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.mail-link {
+    text-decoration: none;
+}
+
+.mail-link:hover {
+    text-decoration: none;
+}
+
+.joke-container {
+    position: fixed;
+    right: -250px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    padding: 15px;
+    background: #2e2e2e;
+    color: #fff;
+    border-radius: 10px 0 0 10px;
+    animation: slideIn 1s forwards;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes slideIn {
+    to { right: 0; }
+}
+
+.joke-text {
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #121212;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ff6b6b;
+    border-radius: 6px;
+    border: 3px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ff4c4c;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 50px 15px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    .content-section {
+        padding: 20px;
+        margin: 20px 10px;
+    }
+
+    .content-section h2 {
+        font-size: 1.5em;
+    }
+
+    .comparison-chart {
+        flex-direction: column;
+    }
+
+    .model {
+        margin: 10px 0;
+        padding: 20px;
+        font-size: 1em;
+    }
+
+    .install-command-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .install-command {
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+
+    .copy-button {
+        padding: 8px;
+        font-size: 0.8em;
+    }
+
+    .button-link {
+        padding: 8px 15px;
+        font-size: 0.8em;
+        margin: 3px 0;
+    }
+
+    footer {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+
+    .joke-container {
+        display: none;
+    }
+}
+
+.code-examples {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 40px auto;
+    background: rgba(30,30,30,0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    position: relative;
+    animation: fadeIn 1.2s ease-out;
+}
+
+.code-examples h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+    text-align: center;
+}
+
+.code-block {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+pre {
+    background-color: #121212; /* Черный фон */
+    color: #f39c12; /* Оранжевый текст */
+    font-size: 1.5em; /* Увеличенный шрифт */
+    padding: 20px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+
+.copy-button-code {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff6b6b;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.copy-button-code:hover {
+    background: #ff4c4c;
+}
+ul {
+    list-style-type: none; /* Убираем стандартные маркеры списка */
+}
+
+li {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Основные стили для сайта */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+h1, h2 {
+    font-weight: bold;
+}
+
+h1 {
+    color: #ff5722;
+}
+
+button, .button-link {
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover, .button-link:hover {
+    background-color: #e64a19;
+}
+
+.content-section {
+    padding: 40px;
+    text-align: center;
+}
+
+/* Стили для сравнения моделей */
+.comparison-chart {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.model {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.model:hover {
+    transform: scale(1.1);
+}
+
+/* Подсветка кода */
+.code-container {
+    font-family: 'Courier New', monospace;
+    background-color: #121212; /* Черный фон */
+    color: #f39c12; /* Оранжевый текст */
+    padding: 20px;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-size: 1.5em; /* Увеличенный размер шрифта */
+}
+
+.code-container .keyword {
+    color: #ff6f00;
+    font-weight: bold;
+}
+
+.code-container .string {
+    color: #98c379;
+}
+
+.code-container .comment {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.code-container .number {
+    color: #f39c12;
+}
+
+#particles-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}

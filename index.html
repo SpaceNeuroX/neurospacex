@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ruSpam: Распознавание рекламы</title>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1E1E1E, #121212);
+      color: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+    }
+    #particles-js-left, #particles-js-right {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .left-panel, .right-panel {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      position: relative;
+    }
+    .right-panel {
+      background-color: #1a1a1a;
+      border-left: 2px solid #444;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 3em;
+      background: linear-gradient(90deg, #21CBF3, #4CAF50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .info-box {
+      background: linear-gradient(145deg, #232323, #1a1a1a);
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid #444;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    .info-box b {
+      color: #21CBF3;
+    }
+    .info-box a {
+      text-decoration: none;
+      color: #4CAF50;
+      transition: color 0.3s;
+    }
+    .info-box a:hover {
+      color: #21CBF3;
+    }
+    .api-method {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(145deg, #1a1a1a, #232323);
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid #444;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    .api-method:hover {
+      background: #333;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    }
+    .method {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+    }
+    .method.get {
+      background-color: #4CAF50;
+    }
+    .method.post {
+      background-color: #2196F3;
+    }
+    .description {
+      flex-grow: 1;
+      margin-left: 10px;
+      color: #ddd;
+    }
+    .code-example {
+      max-height: 0;
+      overflow: hidden;
+      background: #232323;
+      padding: 0 15px;
+      border-radius: 15px;
+      margin-top: 10px;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      border: 1px solid #444;
+      position: relative;
+    }
+    .code-example.open {
+      max-height: 500px;
+      padding: 15px;
+    }
+    pre {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #ccc;
+    }
+    .keyword {
+      color: #d74b72; /* Цвет для ключевых слов */
+      font-weight: bold;
+    }
+    .string {
+      color: #21CBF3; /* Цвет для строк */
+    }
+    .number {
+      color: #e91e63; /* Цвет для чисел */
+    }
+    .operator {
+      color: #ff5722; /* Цвет для операторов */
+    }
+    .function {
+      color: #4CAF50; /* Цвет для функций */
+    }
+    .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(145deg, #4CAF50, #21CBF3);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .copy-button:hover {
+      transform: scale(1.1);
+    }
+    #copy-notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #21CBF3, #4CAF50);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease-in-out;
+      z-index: 9999;
+    }
+
+    /* Mobile layout */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column; /* Stack panels vertically on small screens */
+      }
+
+      .right-panel {
+        display: none; /* Hide the right panel on mobile */
+      }
+
+      .left-panel {
+        flex: none;
+        width: 100%;
+      }
+
+      .api-method {
+        flex-direction: column; /* Stack the API methods vertically */
+      }
+
+      .method {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js-left"></div>
+  <div id="particles-js-right"></div>
+  <div class="left-panel">
+    <h1>ruSpam: Распознавание рекламы API</h1>
+    <div class="info-box">
+      Наша последняя модель, <b>ruSpam-turbo-test</b>, обучена на < 2,5 миллиона сообщений и значительно превосходит предыдущую версию.<br>
+      Чтобы купить токен, напишите <a href="https://t.me/ruSpamNS_bot">@ruSpamNS_bot</a> в Telegram.<br><br>
+      Установка библиотеки: <code>pip install ruSpam</code><br>
+      <b>Доступные модели:</b> <span>spamNS_v1, spamNS_v6, spamNS_v7, spamNS_v8_beta</span>.
+    </div>
+    <div class="api-method" onclick="toggleCode('code-predict')">
+      <div class="method post">API</div>
+      <div class="description">Классификация текста</div>
+    </div>
+    <div id="code-predict" class="code-example">
+      <pre>
+<span class="keyword">from</span> ruSpamLib <span class="keyword">import</span> SpamChecker
+
+user_token = <span class="string">"ВАШ_ТОКЕН"</span>
+checker = SpamChecker(user_token=user_token, model_name=<span class="string">'ruSpam-turbo-test'</span>)
+message = <span class="string">"Это пример сообщения для анализа."</span>
+result = checker.check_spam(message)
+<span class="function">print</span>(result)
+      </pre>
+      <button class="copy-button" onclick="copyCode(event, 'code-predict')">Копировать</button>
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="info-box">
+      <b>ruSpam: Распознавание рекламы официальный бот</b><br>
+      <div class="api-method" onclick="toggleCode('code-help')">
+        <div class="method post">Подробнее</div>
+        <div class="description">Информация о боте и командах</div>
+      </div>
+      <div id="code-help" class="code-example">
+        <pre>
+  <b>ruSpam: Распознавание рекламы официальный бот</b>
+  
+  ❄️ Я бот для обнаружения спама. Просто пригласите меня в вашу группу, и я буду автоматически удалять спам, помогая поддерживать чистоту. ❄️
+  
+  <b>Команды:</b>
+  /start - Запуск бота и вывод приветственного сообщения ❄️
+  /help - Просмотр списка команд и помощи по настройкам ☃️
+  /info - Просмотр текущих настроек группы 🛠️
+  /prof <text> - Проверка текста на спам ❄️
+  /balance - Проверка текущего баланса группы 💰
+  /replenish <сумма> - Пополнение баланса группы на указанную сумму 💳
+  /promo <код> - Активация промокода для получения бонусных средств 🎁
+  
+  💡 Бот платный и берет 0,02 рубля за проверку каждого сообщения.
+  Начальный баланс группы — 25 рублей.
+  
+  ⚠️ Разработчик не несет ответственности за действия пользователей.
+  Возврат средств не предусмотрен.
+  
+  🔔 В канале разработчика будут иногда публиковаться промокоды 
+  на суммы и количество активаций.
+        </pre>
+        <button class="copy-button" onclick="copyCode(event, 'code-help')">Копировать</button>
+      </div>
+    </div>
+  </div>
+    
+
+  <div id="copy-notification">Код скопирован!</div>
+
+  <script>
+    function toggleCode(id) {
+      const codeElement = document.getElementById(id);
+      codeElement.classList.toggle('open');
+    }
+
+    function copyCode(event, id) {
+      const code = document.querySelector(`#${id} pre`).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const notification = document.getElementById('copy-notification');
+        notification.style.opacity = 1;
+        setTimeout(() => {
+          notification.style.opacity = 0;
+        }, 2000);
+      });
+    }
+
+    particlesJS('particles-js-left', {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        shape: { type: 'circle', stroke: { width: 0, color: '#ffffff' }, polygon: { nb_sides: 5 } },
+        opacity: { opacity: 0.5, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+        size: { value: 3, anim: { enable: true, speed: 40, size_min: 0.1 } },
+        line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+      }
+    });
+
+    particlesJS('particles-js-right', {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        shape: { type: 'circle', stroke: { width: 0, color: '#ffffff' }, polygon: { nb_sides: 5 } },
+        opacity: { opacity: 0.5, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+        size: { value: 3, anim: { enable: true, speed: 40, size_min: 0.1 } },
+        line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+      }
+    });
+  </script>
+</body>
+</html>

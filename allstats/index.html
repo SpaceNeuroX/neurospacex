@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #2c2f33, #23272a);
+            color: #f0f0f0;
+            margin: 0;
+            padding: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #2c2f33;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        h3 {
+            color: #dddddd;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            background: #3b3f45;
+            margin: 5px 0;
+            padding: 6px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 12px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #server-stats div {
+            background: #3b3f45;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #server-stats div:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Статистика</h1>
+        <h3>Сегодня:</h3>
+        <ul id="today-stats"></ul>
+        <h3>Общая статистика:</h3>
+        <ul id="all-time-stats"></ul>
+        <h3>График за последнюю неделю:</h3>
+        <div class="chart-container">
+            <canvas id="week-chart"></canvas>
+        </div>
+        <h3>Статус серверов:</h3>
+        <div id="server-stats"></div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const data = JSON.parse(decodeURIComponent(urlParams.get('data')));
+
+        const todayStatsList = document.getElementById('today-stats');
+        todayStatsList.innerHTML = `
+            <li>Всего сообщений: ${data.today.total}</li>
+            <li>Спам: ${data.today.spam}</li>
+            <li>Не спам: ${data.today.non_spam}</li>
+        `;
+
+        const allTimeStatsList = document.getElementById('all-time-stats');
+        allTimeStatsList.innerHTML = `
+            <li>Всего сообщений: ${data.all_time.total}</li>
+            <li>Спам: ${data.all_time.spam}</li>
+            <li>Не спам: ${data.all_time.non_spam}</li>
+        `;
+
+        const weekChartCtx = document.getElementById('week-chart').getContext('2d');
+        const weekLabels = data.week.map(entry => entry.date);
+        const spamData = data.week.map(entry => entry.spam);
+        const nonSpamData = data.week.map(entry => entry.non_spam);
+
+        new Chart(weekChartCtx, {
+            type: 'line',
+            data: {
+                labels: weekLabels,
+                datasets: [
+                    {
+                        label: 'Спам',
+                        data: spamData,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Не спам',
+                        data: nonSpamData,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Дата' } },
+                    y: { title: { display: true, text: 'Сообщения' } }
+                }
+            }
+        });
+
+        const serverStatsDiv = document.getElementById('server-stats');
+        data.servers.forEach(server => {
+            const statusColor = server.status === "online" ? "green" : "red";
+            serverStatsDiv.innerHTML += `
+                <div>
+                    <strong style="color: ${statusColor};">${server.name} (${server.status})</strong>
+                    <ul>
+                        <li>CPU Usage: ${server.cpu_usage}%</li>
+                        <li>Memory Usage: ${server.memory_usage}%</li>
+                        <li>Disk Usage: ${server.disk_usage}%</li>
+                        <li>Uptime: ${server.uptime}</li>
+                    </ul>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
