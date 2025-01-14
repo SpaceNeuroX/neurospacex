@@ -8,10 +8,10 @@ particlesJS("particles-js", {
             }
         },
         "color": {
-            "value": "#ff6b6b"  // Оранжевый цвет
+            "value": "#ff6b6b"
         },
         "shape": {
-            "type": "circle",  // Форма частиц
+            "type": "circle",
             "stroke": {
                 "width": 0,
                 "color": "#000000"
