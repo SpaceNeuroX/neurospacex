@@ -8,11 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     .command {
-        font-weight: bold;
-        color: #007BFF; /* синий цвет */
-        background-color: #f0f8ff; /* светлый фон */
-        padding: 0 5px;
-        border-radius: 3px;
+      font-weight: bold;
+      color: #007BFF; /* синий цвет */
+      background-color: #f0f8ff; /* светлый фон */
+      padding: 0 5px;
+      border-radius: 3px;
     }
 
     body {
@@ -198,35 +198,43 @@
       z-index: 9999;
     }
 
+    /* Адаптивные стили для мобильных устройств */
     @media (max-width: 768px) {
       body {
         flex-direction: column;
         overflow: auto;
+        height: auto; /* убираем фиксированную высоту */
+      }
+
+      .left-panel, .right-panel {
+        padding: 10px;
+        width: 100%;
+        position: relative; /* убираем фиксированное позиционирование */
+        flex: none; /* убираем гибкость */
+      }
+
+      .right-panel {
+        display: block; /* делаем правую панель видимой на мобильных устройствах */
+        border-left: none; /* убираем разделитель на мобильных устройствах */
+      }
+
+      #particles-js-left, #particles-js-right {
+        height: 100%; /* делаем частицы нормально видимыми на мобильных устройствах */
+        position: absolute; /* убираем фиксированное позиционирование */
       }
 
       h1 {
         font-size: 2.5em;
       }
 
-      .left-panel, .right-panel {
-        padding: 10px;
-        width: 100%;
-      }
-
-      .right-panel {
-        display: none;
-      }
-
       .api-method {
         flex-direction: column;
+        width: 100%;
+        padding: 15px;
       }
 
       .method {
         margin-bottom: 10px;
-      }
-
-      #particles-js-left, #particles-js-right {
-        height: 60%;
       }
 
       .copy-button {
@@ -246,7 +254,15 @@
       .code-example.open {
         padding: 10px;
       }
+
+      /* Мобильная версия уведомлений */
+      #copy-notification {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
+
   </style>
 </head>
 <body>
