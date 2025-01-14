@@ -9,7 +9,7 @@
   <style>
     .command {
       font-weight: bold;
-      color: #007BFF; /* синий цвет */
+      color: #b3beca; /* синий цвет */
       background-color: #f0f8ff; /* светлый фон */
       padding: 0 5px;
       border-radius: 3px;
@@ -20,9 +20,9 @@
       font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #1E1E1E, #121212);
       color: #ffffff;
-      overflow: hidden;
+      overflow-y: auto;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       height: 100vh;
     }
 
@@ -33,16 +33,9 @@
       z-index: -1;
     }
 
-    .left-panel, .right-panel {
-      flex: 1;
-      padding: 20px;
+    .content {
+      padding: 15px;
       overflow-y: auto;
-      position: relative;
-    }
-
-    .right-panel {
-      background-color: #1a1a1a;
-      border-left: 2px solid #444;
     }
 
     h1 {
@@ -59,8 +52,8 @@
       padding: 20px;
       border-radius: 20px;
       border: 1px solid #444;
-      margin-bottom: 20px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px
     }
 
     .info-box b {
@@ -82,7 +75,7 @@
       justify-content: space-between;
       align-items: center;
       background: linear-gradient(145deg, #1a1a1a, #232323);
-      margin: 10px 0;
+      margin: 20px 0;
       padding: 15px;
       border-radius: 15px;
       border: 1px solid #444;
@@ -124,15 +117,16 @@
       background: #232323;
       padding: 0 15px;
       border-radius: 15px;
-      margin-top: 10px;
       transition: max-height 0.4s ease, padding 0.4s ease;
       border: 1px solid #444;
       position: relative;
+      margin-bottom: 20px;
     }
 
     .code-example.open {
       max-height: 500px;
       padding: 15px;
+      margin-bottom: 20px;
     }
 
     pre {
@@ -198,31 +192,7 @@
       z-index: 9999;
     }
 
-    /* Адаптивные стили для мобильных устройств */
     @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-        overflow: auto;
-        height: auto; /* убираем фиксированную высоту */
-      }
-
-      .left-panel, .right-panel {
-        padding: 10px;
-        width: 100%;
-        position: relative; /* убираем фиксированное позиционирование */
-        flex: none; /* убираем гибкость */
-      }
-
-      .right-panel {
-        display: block; /* делаем правую панель видимой на мобильных устройствах */
-        border-left: none; /* убираем разделитель на мобильных устройствах */
-      }
-
-      #particles-js-left, #particles-js-right {
-        height: 100%; /* делаем частицы нормально видимыми на мобильных устройствах */
-        position: absolute; /* убираем фиксированное позиционирование */
-      }
-
       h1 {
         font-size: 2.5em;
       }
@@ -243,6 +213,7 @@
       }
 
       .info-box {
+        margin-top: 1000px;
         padding: 15px;
       }
 
@@ -255,7 +226,6 @@
         padding: 10px;
       }
 
-      /* Мобильная версия уведомлений */
       #copy-notification {
         bottom: 20px;
         left: 50%;
@@ -268,7 +238,7 @@
 <body>
   <div id="particles-js-left"></div>
   <div id="particles-js-right"></div>
-  <div class="left-panel">
+  <div class="content">
     <h1>ruSpam: Распознавание рекламы API</h1>
     <div class="info-box">
       Наша последняя модель, <b>ruSpam-turbo-test</b>, обучена на < 2,5 миллиона сообщений и значительно превосходит предыдущую версию.<br>
@@ -293,8 +263,7 @@ result = checker.check_spam(message)
       </pre>
       <button class="copy-button" onclick="copyCode(event, 'code-predict')">Копировать</button>
     </div>
-  </div>
-  <div class="right-panel">
+
     <div class="info-box">
       <b>ruSpam: Распознавание рекламы официальный бот</b><br>
       <div class="api-method" onclick="toggleCode('code-help')">
@@ -317,10 +286,11 @@ result = checker.check_spam(message)
   <span class="command">/dock</span> - Получение документации по АПИ 📜
   <span class="command">/report</span> - Отправить жалобу на сообщение, 
   если бот ошибся в определении спама 📝
-  </pre>
+        </pre>
       </div>
     </div>
   </div>
+
   <script>
     particlesJS('particles-js-left', {
       particles: {
