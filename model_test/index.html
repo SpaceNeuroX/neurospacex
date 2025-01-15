@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ruSpam: Тестирование</title>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1E1E1E, #121212);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .content {
+      padding: 15px;
+      overflow-y: auto;
+      margin: auto;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      background: linear-gradient(90deg, #21CBF3, #4CAF50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form-container {
+      background: linear-gradient(145deg, #232323, #1a1a1a);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      margin: 20px 0;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      resize: none;
+      outline: none;
+      height: 100px;
+      background: #1a1a1a;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      background: linear-gradient(90deg, #21CBF3, #4CAF50);
+      color: white;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #4CAF50;
+    }
+
+    .loading {
+      color: #ffffff;
+      font-size: 18px;
+      margin-top: 15px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="content">
+    <h1>ruSpam: Тестирование сообщения</h1>
+    <div class="form-container">
+      <textarea id="message" placeholder="Введите сообщение для анализа"></textarea>
+      <button onclick="checkSpam()">Проверить</button>
+      <div id="result" class="result"></div>
+      <div id="loading" class="loading" style="display: none;">Проверка...</div>
+    </div>
+  </div>
+
+  <script>
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 100 },
+        size: { value: 3 },
+        move: { enable: true, speed: 1 },
+        opacity: { value: 0.3 }
+      }
+    });
+
+    async function checkSpam() {
+      const message = document.getElementById('message').value;
+      const resultDiv = document.getElementById('result');
+      const loadingDiv = document.getElementById('loading');
+
+      if (!message.trim()) {
+        resultDiv.textContent = "Введите сообщение.";
+        resultDiv.style.color = "#e91e63";
+        return;
+      }
+
+      loadingDiv.style.display = 'block';
+      resultDiv.textContent = "";
+
+      try {
+        const response = await fetch('https://neurospacex-ruspam.hf.space/api/check_spam', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'api-key': '7a50f069f6dcbb8ab18a4e6d58836565'
+          },
+          body: JSON.stringify({
+            message: message,
+            model_name: 'ruSpamNS'
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Ошибка API: " + response.status);
+        }
+
+        const data = await response.json();
+        const { is_spam, confidence } = data;
+
+        loadingDiv.style.display = 'none';
+        resultDiv.textContent = is_spam
+          ? `Сообщение определено как СПАМ (уверенность: ${(confidence * 100).toFixed(2)}%)`
+          : `Сообщение НЕ является спамом (уверенность: ${(confidence * 100).toFixed(2)}%)`;
+        resultDiv.style.color = is_spam ? "#e91e63" : "#4CAF50";
+
+      } catch (error) {
+        loadingDiv.style.display = 'none';
+        resultDiv.textContent = "Произошла ошибка: " + error.message;
+        resultDiv.style.color = "#e91e63";
+      }
+    }
+  </script>
+</body>
+</html>

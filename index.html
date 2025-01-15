@@ -192,6 +192,29 @@
       z-index: 9999;
     }
 
+    .test-model-box {
+      margin-top: 30px;
+      text-align: center;
+      background: #232323;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .test-model-box a {
+      text-decoration: none;
+      color: #4CAF50;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background: linear-gradient(145deg, #21CBF3, #4CAF50);
+      transition: transform 0.2s;
+    }
+
+    .test-model-box a:hover {
+      transform: scale(1.1);
+    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 2.5em;
@@ -232,7 +255,6 @@
         transform: translateX(-50%);
       }
     }
-
   </style>
 </head>
 <body>
@@ -246,7 +268,13 @@
       Установка библиотеки: <code>pip install ruSpam</code><br>
       <b>О модели:</b> Модели ruSpam разработаны @NeuroSpaceX. Они обладают невероятной точностью, достигая 99% корректности в определении спама. Системы не допускают практически никаких ошибок и обеспечивают надежную фильтрацию сообщений.
     </div>
+
+    <!-- Новый блок с кнопкой для теста -->
+    <div class="test-model-box">
+      <p>Протестировать работу модели можно <a href="https://ru-spam.ru/test_model" target="_blank" style="color: white;">здесь</a></p>
+    </div>
     
+
     <div class="api-method" onclick="toggleCode('code-predict')">
       <div class="method post">API</div>
       <div class="description">Классификация текста</div>
