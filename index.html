@@ -6,6 +6,8 @@
   <title>ruSpam: Распознавание рекламы</title>
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
   <style>
     .command {
       font-weight: bold;
@@ -137,27 +139,6 @@
       color: #ccc;
     }
 
-    .keyword {
-      color: #d74b72;
-      font-weight: bold;
-    }
-
-    .string {
-      color: #21CBF3;
-    }
-
-    .number {
-      color: #e91e63;
-    }
-
-    .operator {
-      color: #ff5722;
-    }
-
-    .function {
-      color: #4CAF50;
-    }
-
     .copy-button {
       position: absolute;
       top: 10px;
@@ -268,11 +249,9 @@
       <b>О модели:</b> Модели ruSpam разработаны @NeuroSpaceX. Они обладают невероятной точностью, достигая 99% корректности в определении спама. Системы не допускают практически никаких ошибок и обеспечивают надежную фильтрацию сообщений.
     </div>
 
-    <!-- Новый блок с кнопкой для теста -->
     <div class="test-model-box">
       <p>Протестировать работу модели можно <a href="https://ru-spam.ru/model_test" target="_blank" style="color: white;">здесь</a></p>
     </div>
-    
 
     <div class="api-method" onclick="toggleCode('code-predict')">
       <div class="method post">API</div>
@@ -325,39 +304,58 @@
   </div>
 
   <script>
+    function toggleCode(id) {
+      const codeBlock = document.getElementById(id);
+      codeBlock.classList.toggle('open');
+    }
+
+    function copyCode(event, id) {
+      const codeBlock = document.getElementById(id);
+      const text = codeBlock.querySelector('pre').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const notification = document.createElement('div');
+        notification.id = 'copy-notification';
+        notification.innerText = 'Код скопирован в буфер обмена!';
+        document.body.appendChild(notification);
+        setTimeout(() => notification.style.opacity = 1, 100);
+        setTimeout(() => notification.style.opacity = 0, 2000);
+      });
+    }
+
     particlesJS('particles-js-left', {
       particles: {
-        number: { value: 100 },
-        size: { value: 3 },
-        move: { enable: true, speed: 1 },
-        opacity: { value: 0.3 }
+        number: {
+          value: 100
+        },
+        size: {
+          value: 3
+        },
+        move: {
+          speed: 1
+        },
+        opacity: {
+          value: 0.5
+        }
       }
     });
 
     particlesJS('particles-js-right', {
       particles: {
-        number: { value: 50 },
-        size: { value: 4 },
-        move: { enable: true, speed: 1 },
-        opacity: { value: 0.3 }
+        number: {
+          value: 50
+        },
+        size: {
+          value: 2
+        },
+        move: {
+          speed: 1
+        },
+        opacity: {
+          value: 0.3
+        }
       }
     });
-
-    function toggleCode(id) {
-      let element = document.getElementById(id);
-      element.classList.toggle('open');
-    }
-
-    function copyCode(event, id) {
-      event.stopPropagation();
-      let code = document.getElementById(id).querySelector('pre').innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        let notification = document.getElementById('copy-notification');
-        notification.style.opacity = 1;
-        setTimeout(() => notification.style.opacity = 0, 2000);
-      });
-    }
   </script>
-  <div id="copy-notification">Код скопирован в буфер обмена!</div>
 </body>
 </html>
+
