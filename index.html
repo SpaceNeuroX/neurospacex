@@ -231,16 +231,17 @@ print(result)
         
         // Подсветка ключевых слов
         code = code.replace(/\b(def|import|return|for|if|else|print|in|as)\b/g, '<span class="keyword">$1</span>');
-    
+        
         // Подсветка строк
         code = code.replace(/(".*?"|'.*?')/g, '<span class="string">$1</span>');
-    
+        
         // Подсветка комментариев
         code = code.replace(/(#.*$)/gm, '<span class="comment">$1</span>');
-    
+        
         // Подсветка функций
         code = code.replace(/\b\w+\s?(?=\()/g, '<span class="function">$&</span>');
-    
+        
+        // Вставляем код с подсветкой в блок
         block.innerHTML = code; // Вставляем HTML с подсветкой
       });
     }
