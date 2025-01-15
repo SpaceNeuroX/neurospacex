@@ -223,26 +223,30 @@ print(result)
         setTimeout(() => notification.style.opacity = 0, 2000);
       });
     }
-
     function highlightCode() {
       const codeBlocks = document.querySelectorAll('pre code');
       codeBlocks.forEach(block => {
-        let code = block.textContent; // Используем textContent, чтобы получить чистый код
-        
+        let code = block.textContent;
+    
+        // Экранирование символов <, > и &
+        code = code.replace(/&/g, '&amp;')
+                   .replace(/</g, '&lt;')
+                   .replace(/>/g, '&gt;');
+    
         // Подсветка ключевых слов
         code = code.replace(/\b(def|import|return|for|if|else|print|in|as)\b/g, '<span class="keyword">$1</span>');
-        
+    
         // Подсветка строк
         code = code.replace(/(".*?"|'.*?')/g, '<span class="string">$1</span>');
-        
+    
         // Подсветка комментариев
         code = code.replace(/(#.*$)/gm, '<span class="comment">$1</span>');
-        
+    
         // Подсветка функций
         code = code.replace(/\b\w+\s?(?=\()/g, '<span class="function">$&</span>');
-        
-        // Вставляем код с подсветкой в блок
-        block.innerHTML = code; // Вставляем HTML с подсветкой
+    
+        // Вставляем код с подсветкой
+        block.innerHTML = code;
       });
     }
 
