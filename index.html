@@ -265,7 +265,6 @@
     <div class="info-box">
       Наша последняя модель, <b>ruSpam-turbo-test</b>, обучена на < 2,5 миллиона сообщений и значительно превосходит предыдущую версию.<br>
       Чтобы купить токен, напишите <a href="https://t.me/ruSpamNS_bot">@ruSpamNS_bot</a> в Telegram.<br><br>
-      Установка библиотеки: <code>pip install ruSpam</code><br>
       <b>О модели:</b> Модели ruSpam разработаны @NeuroSpaceX. Они обладают невероятной точностью, достигая 99% корректности в определении спама. Системы не допускают практически никаких ошибок и обеспечивают надежную фильтрацию сообщений.
     </div>
 
@@ -281,16 +280,24 @@
     </div>
     <div id="code-predict" class="code-example">
       <pre>
-<span class="keyword">from</span> ruSpamLib <span class="keyword">import</span> SpamChecker
-
-user_token = <span class="string">"ВАШ_ТОКЕН"</span>
-checker = SpamChecker(user_token=user_token, model_name=<span class="string">'ruSpamNS'</span>)
-message = <span class="string">"Это пример сообщения для анализа."</span>
-result = checker.check_spam(message)
-<span class="function">print</span>(result)
+    import requests
+    
+    def check_spam(user_token, message, model_name="ruSpam"):
+        server = "https://neurospacex-ruspam.hf.space/api/check_spam"
+        data = {"message": message, "model_name": model_name}
+        headers = {"api-key": user_token}
+    
+        response = requests.post(server, json=data, headers=headers)
+        return response.json()
+    
+    user_token = ""
+    message = "This is a test message."
+    result = check_spam(user_token, message)
+    print(result)
       </pre>
       <button class="copy-button" onclick="copyCode(event, 'code-predict')">Копировать</button>
     </div>
+
 
     <div class="info-box">
       <b>ruSpam: Распознавание рекламы официальный бот</b><br>
