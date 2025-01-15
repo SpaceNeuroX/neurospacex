@@ -279,26 +279,24 @@
       <div class="description">Классификация текста</div>
     </div>
     <div id="code-predict" class="code-example">
-      <pre>
-    import requests
-    
-    def check_spam(user_token, message, model_name="ruSpam"):
-        server = "https://neurospacex-ruspam.hf.space/api/check_spam"
-        data = {"message": message, "model_name": model_name}
-        headers = {"api-key": user_token}
-    
-        response = requests.post(server, json=data, headers=headers)
-        return response.json()
-    
-    user_token = ""
-    message = "This is a test message."
-    result = check_spam(user_token, message)
-    print(result)
-      </pre>
-      <button class="copy-button" onclick="copyCode(event, 'code-predict')">Копировать</button>
-    </div>
-
-
+        <pre><code class="language-python">
+      import requests
+      
+      def check_spam(user_token, message, model_name="ruSpam"):
+          server = "https://neurospacex-ruspam.hf.space/api/check_spam"
+          data = {"message": message, "model_name": model_name}
+          headers = {"api-key": user_token}
+      
+          response = requests.post(server, json=data, headers=headers)
+          return response.json()
+      
+      user_token = ""
+      message = "This is a test message."
+      result = check_spam(user_token, message)
+      print(result)
+        </code></pre>
+        <button class="copy-button" onclick="copyCode(event, 'code-predict')">Копировать</button>
+      </div>
     <div class="info-box">
       <b>ruSpam: Распознавание рекламы официальный бот</b><br>
       <div class="api-method" onclick="toggleCode('code-help')">
