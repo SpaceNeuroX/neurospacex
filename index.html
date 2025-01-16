@@ -38,6 +38,27 @@ result = check_spam(user_token, message)
 print(result)
       </code></pre>
     </div>
+
+    <!-- Example of server response -->
+    <div class="response-example">
+      <h3>Example Server Response</h3>
+      <pre><code class="language-json">
+{
+  "is_spam": 0,
+  "confidence": 8.190393145923736e-07,
+  "tokens_used": 18,
+  "cost": 0.005625
+}
+      </code></pre>
+      <p><strong>Explanation:</strong></p>
+      <ul>
+        <li><strong>is_spam</strong>: Indicates whether the message is classified as spam (1 for spam, 0 for not spam).</li>
+        <li><strong>confidence</strong>: The confidence level of the model in its prediction (closer to 1 means higher confidence in the classification).</li>
+        <li><strong>tokens_used</strong>: The number of tokens (words or subwords) used in processing the message for prediction.</li>
+        <li><strong>cost</strong>: The cost of performing this prediction, typically measured in API usage or credits.</li>
+      </ul>
+    </div>
+
   </div>
   <script src="script.js"></script>
 </body>
