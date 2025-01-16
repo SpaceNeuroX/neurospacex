@@ -39,9 +39,12 @@ print(result)
       </code></pre>
     </div>
 
-    <!-- Example of server response -->
-    <div class="response-example">
-      <h3>Example Server Response</h3>
+    <!-- Example of server response with toggle -->
+    <div class="api-method" onclick="toggleCode('code-response')">
+      <div class="method post">Example Server Response</div>
+      <div class="description">Пример ответа от сервера</div>
+    </div>
+    <div id="code-response" class="code-example">
       <pre><code class="language-json">
 {
   "is_spam": 0,
@@ -76,5 +79,15 @@ print(result)
 
   </div>
   <script src="script.js"></script>
+  <script>
+    function toggleCode(id) {
+      var element = document.getElementById(id);
+      if (element.style.display === "none") {
+        element.style.display = "block";
+      } else {
+        element.style.display = "none";
+      }
+    }
+  </script>
 </body>
 </html>
