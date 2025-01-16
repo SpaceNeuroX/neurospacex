@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ruSpam: Распознавание рекламы</title>
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -40,55 +43,16 @@
     }
 
     .code-example {
-      max-height: 0;
-      overflow: hidden;
       background: #232323;
-      padding: 0 15px;
-      border-radius: 15px;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-      border: 1px solid #444;
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .code-example.open {
-      max-height: 500px;
       padding: 15px;
+      border-radius: 15px;
+      border: 1px solid #444;
       margin-bottom: 20px;
+      overflow: auto;
     }
 
     pre {
       margin: 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.7;
-      color: #ccc;
-    }
-
-    .keyword {
-      color: #ff6347;
-      font-weight: bold;
-    }
-
-    .string {
-      color: #32cd32;
-    }
-
-    .comment {
-      color: #808080;
-      font-style: italic;
-    }
-
-    .function {
-      color: #1e90ff;
-    }
-
-    .command {
-      font-weight: bold;
-      color: #b3beca;
-      background-color: #f0f8ff;
-      padding: 0 5px;
-      border-radius: 3px;
     }
 
     .api-method {
@@ -131,46 +95,6 @@
       margin-left: 10px;
       color: #ddd;
     }
-
-    .copy-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: linear-gradient(145deg, #4CAF50, #21CBF3);
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    .copy-button:hover {
-      transform: scale(1.1);
-    }
-
-    #copy-notification {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(90deg, #21CBF3, #4CAF50);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-size: 16px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease-in-out;
-      z-index: 9999;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5em;
-      }
-    }
   </style>
 </head>
 <body>
@@ -184,7 +108,7 @@
       <div class="description">Классификация текста</div>
     </div>
     <div id="code-predict" class="code-example">
-      <pre><code id="code-block">
+      <pre><code class="language-python">
 import requests
 
 def check_spam(user_token, message, model_name="ruSpam"):
@@ -200,60 +124,10 @@ message = "This is a test message."
 result = check_spam(user_token, message)
 print(result)
       </code></pre>
-      <button class="copy-button" onclick="copyCode(event, 'code-predict')">Копировать</button>
     </div>
   </div>
 
   <script>
-    function toggleCode(id) {
-      const codeBlock = document.getElementById(id);
-      codeBlock.classList.toggle('open');
-      highlightCode();
-    }
-
-    function copyCode(event, id) {
-      const codeBlock = document.getElementById(id);
-      const text = codeBlock.querySelector('pre').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const notification = document.createElement('div');
-        notification.id = 'copy-notification';
-        notification.innerText = 'Код скопирован в буфер обмена!';
-        document.body.appendChild(notification);
-        setTimeout(() => notification.style.opacity = 1, 100);
-        setTimeout(() => notification.style.opacity = 0, 2000);
-      });
-    }
-    function highlightCode() {
-      const codeBlocks = document.querySelectorAll('pre code');
-      codeBlocks.forEach(block => {
-        let code = block.textContent;
-    
-        // Экранирование символов <, > и &
-        code = code.replace(/&/g, '&amp;')
-                   .replace(/</g, '&lt;')
-                   .replace(/>/g, '&gt;');
-    
-        // Подсветка ключевых слов
-        code = code.replace(/\b(def|import|return|for|if|else|print|in|as)\b/g, '<span class="keyword">$1</span>');
-    
-        // Подсветка строк
-        code = code.replace(/(".*?"|'.*?')/g, '<span class="string">$1</span>');
-    
-        // Подсветка комментариев
-        code = code.replace(/(#.*$)/gm, '<span class="comment">$1</span>');
-    
-        // Подсветка функций
-        code = code.replace(/\b\w+\s?(?=\()/g, '<span class="function">$&</span>');
-    
-        // Вставляем код с подсветкой
-        block.innerHTML = code;
-      });
-    }
-
-
-    // Инициализация подсветки для кода при загрузке
-    document.addEventListener('DOMContentLoaded', highlightCode);
-
     particlesJS('particles-js-left', {
       particles: {
         number: {
