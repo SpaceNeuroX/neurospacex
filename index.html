@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ruSpam: Распознавание рекламы</title>
+  <title>ruSpam: Ad Recognition</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
@@ -14,7 +14,7 @@
   <div id="particles-js-left"></div>
   <div id="particles-js-right"></div>
   <div class="content">
-    <h1>ruSpam: Распознавание рекламы API</h1>
+    <h1>ruSpam: Ad Recognition API</h1>
 
     <!-- First panel with API instructions -->
     <div class="api-method" onclick="toggleCode('code-api-key')">
@@ -24,7 +24,7 @@
     <div id="code-api-key" class="code-example">
       <p>To obtain an API key, follow these steps:</p>
       <ol>
-        <li>Search for the bot <strong>@ruSpamNS_bot</strong> in Telegram.</li>
+        <li>Search for the bot <strong>@ruSpamNS_bot</strong> on Telegram.</li>
         <li>Use the command <code>/buy_token &lt;amount&gt;</code> to generate a payment link.</li>
         <li>Pay through the provided link.</li>
         <li>After payment, use the command <code>/token_balance</code> to get your API key and check your balance.</li>
@@ -37,7 +37,7 @@
     <!-- First panel with API method -->
     <div class="api-method" onclick="toggleCode('code-predict')">
       <div class="method post">API</div>
-      <div class="description">Классификация текста</div>
+      <div class="description">Text Classification</div>
     </div>
     <div id="code-predict" class="code-example">
       <pre><code class="language-python">
@@ -61,7 +61,7 @@ print(result)
     <!-- Example of server response with toggle -->
     <div class="api-method" onclick="toggleCode('code-response')">
       <div class="method post">Example Server Response</div>
-      <div class="description">Пример ответа от сервера</div>
+      <div class="description">Example Response from Server</div>
     </div>
     <div id="code-response" class="code-example">
       <pre><code class="language-json">
