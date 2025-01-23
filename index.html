@@ -53,6 +53,12 @@ def check_spam(user_token, message, model_name="ruSpam"):
 
 user_token = ""
 message = "Это тестовое сообщение."
+
+# Вы можете указать модель "bert" или "tinybert" для использования:
+# Пример использования:
+# result = check_spam(user_token, message, model_name="bert")
+# result = check_spam(user_token, message, model_name="tinybert")
+
 result = check_spam(user_token, message)
 print(result)
       </code></pre>
